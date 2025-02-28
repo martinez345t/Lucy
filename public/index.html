@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles/styles.css">
+    <title>Creador de Juegos Roblox</title>
+</head>
+<body>
+    <h1>Generador de Juegos Roblox</h1>
+    <input type="text" id="theme" placeholder="Tema del juego" />
+    <button id="create-button">Crear Juego</button>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('create-button').addEventListener('click', async () => {
+            const theme = document.getElementById('theme').value;
+            const response = await fetch('/.netlify/functions/create_game', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ theme })
+            });
+            const result = await response.json();
+            document.getElementById('result').innerText = JSON.stringify(result, null, 2);
+        });
+    </script>
+</body>
+</html>
